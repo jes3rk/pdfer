@@ -27,21 +27,24 @@ public class Main {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				selected = chooseFiles();
+				JButton merge = new JButton("Merge Selected");
+				merge.addActionListener(new ActionListener() {
+					@Override
+					public void actionPerformed(ActionEvent e) {
+						Arrays.asList(selected).forEach(x -> {
+							System.out.println(x.getName());
+						});
+					}
+				});
+				f.getContentPane().add(BorderLayout.EAST, merge);
+				f.revalidate();
 			}
 		});
 
-		JButton merge = new JButton("Merge Selected");
-		merge.addActionListener(new ActionListener() {
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				Arrays.asList(selected).forEach(x -> {
-					System.out.println(x.getName());
-				});
-			}
-		});
+
 		
 		f.getContentPane().add(BorderLayout.WEST, select);
-		f.getContentPane().add(BorderLayout.EAST, merge);
+//		f.getContentPane().add(BorderLayout.EAST, merge);
 	}
 	
 	public static File[] chooseFiles() {
@@ -50,9 +53,9 @@ public class Main {
 		jfc.setMultiSelectionEnabled(true);
 		jfc.setFileSelectionMode(JFileChooser.FILES_ONLY);
 		
-//		jfc.setAcceptAllFileFilterUsed(false);
-//		FileNameExtensionFilter f = new FileNameExtensionFilter("PDFs", "pdf");
-//		jfc.addChoosableFileFilter(f);
+		jfc.setAcceptAllFileFilterUsed(false);
+		FileNameExtensionFilter f = new FileNameExtensionFilter("pdf", "pdf");
+		jfc.addChoosableFileFilter(f);
 		
 		int returnValue = jfc.showOpenDialog(null);
 		
